@@ -11,8 +11,8 @@
     --text-color: #1f2937;
     --primary-color: #6366f1;
     --card-bg: #f9fafb;
-    --card-shadow: rgba(0,0,0,0.05);
-    --border: rgba(0,0,0,0.08);
+    --card-shadow: rgba(0,80,100,0.1);
+    --border: rgba(0,100,255,0.4);
   }
   body.dark {
     --bg-color: #0f172a;
@@ -122,7 +122,7 @@
     box-shadow: 0 2px 4px var(--card-shadow);
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .card:hover { transform: translateY(-4px); box-shadow: 0 6px 14px var(--card-shadow); background-colour: var(--primary-colour)}
+  .card:hover { transform: translateY(-4px); box-shadow: 0 6px 14px var(--card-shadow); background: var(--primary-colour) }
   .card h3 { margin: 0 0 .4rem; color: var(--primary-color); font-size: clamp(1.05rem, .6vw + 1rem, 1.2rem); }
   .card p { margin: 0 0 .5rem; line-height: 1.45; }
   .card .muted { opacity: .8; font-size: .95rem; }
