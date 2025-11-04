@@ -196,27 +196,27 @@
 
 <!-- Grid -->
 <main class="container">
-  <section class="sections" id="reports-grid">
+  <section class="sections" id="projects-grid">
     <div class="empty">No Projects yet.</div>
   </section>
 </main>
 
 <script>
 (async function(){
-  const GRID  = document.getElementById('reports-grid');
-  const SRC   = 'reports/reports.json';
+  const GRID  = document.getElementById('projects-grid');
+  const SRC   = 'projects/projects.json';
   let entries = [];
 
   async function fetchEntries(){
     const res = await fetch(SRC, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Failed to fetch reports.json');
+    if (!res.ok) throw new Error('Failed to fetch projects.json');
     return res.json();
   }
 
   function render(list){
     GRID.innerHTML = '';
     if (!list.length){
-      GRID.innerHTML = '<div class="empty">No reports yet. Add PDFs in <code>/reports/</code> and an item in <code>reports/reports.json</code>.</div>';
+      GRID.innerHTML = '<div class="empty">No projects yet. Add PDFs in <code>/projects/</code> and an item in <code>projects/projects.json</code>.</div>';
       return;
     }
     for (const it of list){
@@ -227,7 +227,7 @@
         <h3>${it.title || 'Untitled'}</h3>
         ${dateStr ? `<p class="muted">${dateStr}</p>` : ''}
         ${it.summary ? `<p>${it.summary}</p>` : ''}
-        ${it.pdf ? `<a class="btn" href="reports/viewer.html?pdf=${encodeURIComponent(it.pdf)}&title=${encodeURIComponent(it.title || 'Untitled')}">Read Report →</a>` : ''}
+        ${it.pdf ? `<a class="btn" href="projects/viewer.html?pdf=${encodeURIComponent(it.pdf)}&title=${encodeURIComponent(it.title || 'Untitled')}">Read Project →</a>` : ''}
       `;
       GRID.appendChild(card);
     }
@@ -262,7 +262,7 @@
     render(entries);
   } catch (err){
     console.error(err);
-    GRID.innerHTML = '<div class="empty">Could not load <code>reports/reports.json</code>. Check the path and JSON syntax.</div>';
+    GRID.innerHTML = '<div class="empty">Could not load <code>projects/projects.json</code>. Check the path and JSON syntax.</div>';
   }
 
   document.getElementById('search').addEventListener('input', applyFilters);
