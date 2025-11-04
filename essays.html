@@ -1,1 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Neeraj Nandan Akella – Portfolio</title>
+<style>
 
+  :root {
+    --bg-color: #f7fdff;
+    --text-color: #192530;
+    --primary-color: #2799e6;
+    --card-bg: #f9fafb;
+    --card-shadow: rgba(0,90,150,0.1);
+    --border: #2799e6;
+  }
+  body.dark {
+    --bg-color: #0d1929;
+    --text-color: #f1f5f9;
+    --primary-color: #1ca2fc;
+    --card-bg: #112533
+    --card-shadow: rgba(150,200,255,0.1);
+    --border: #f7fdff;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: Helvetica Neue, Helvetica;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    line-height: 1.6;
+  }
+  a { color: var(--primary-color); text-decoration: none; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--primary-color); outline-offset: 2px;
+  }
+
+  .container { width: min(1100px, 92vw); margin: 0 auto; padding-inline: 1rem; }
+
+  /* Navbar */
+  .navbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--card-bg);
+    box-shadow: 0 2px 4px var(--card-shadow);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 0; }
+
+  /* Logo + profile pic */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1.1rem, 1vw + 1rem, 1.25rem);
+    font-weight: 700;
+  }
+  .logo .profile-pic {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border: 1.5px solid var(--border);           /* subtle ring that adapts to theme */
+    background: var(--bg-color);                 /* avoids dark fringing on dark mode */
+  }
+
+  .nav-links { list-style: none; display: flex; gap: 1.25rem; margin: 0; padding: 0; }
+  .nav-links a { font-weight: 500; }
+  .nav-links a.active { color: var(--primary-color); font-weight: 700; }
+  .nav-actions { display: flex; align-items: center; gap: .5rem; }
+  .toggle-theme, .menu-toggle {
+    border: 1px solid var(--border);
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: .5rem .75rem;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .toggle-theme:hover, .menu-toggle:hover { background: var(--card-bg); }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-links.open { display: grid; grid-template-columns: 1fr; gap: .25rem; padding: .5rem 0; }
+  }
+  @media (min-width: 769px) { .menu-toggle { display: none; } }
+
+  /* Page header */
+  .hero { text-align: left; padding: clamp(1.25rem, 4vw, 3rem) 0 1rem; }
+  .hero h1 { margin: 0 0 .35rem 0; font-size: clamp(1.4rem, 2.2vw + 1rem, 2rem); }
+  .hero p { margin: 0; opacity: .9; font-size: clamp(0.95rem, 0.4vw + 0.9rem, 1.05rem); }
+
+  /* Controls (Search + Sort) */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem;
+    padding-bottom: 1rem;
+  }
+  .controls input, .controls select {
+    width: auto;
+    min-width: 220px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text-color);
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+  }
+
+  /* Card grid */
+  .sections { display: grid; grid-template-columns: 1fr; gap: 1.25rem; padding: 1rem 0 2.5rem; }
+  @media (min-width: 600px) { .sections { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .sections { grid-template-columns: repeat(3, 1fr); } }
+
+  .card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow: 0 2px 4px var(--card-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 6px 14px var(--card-shadow); background: var(--primary-colour) }
+  .card h3 { margin: 0 0 .4rem; color: var(--primary-color); font-size: clamp(1.05rem, .6vw + 1rem, 1.2rem); }
+  .card p { margin: 0 0 .5rem; line-height: 1.45; }
+  .card .muted { opacity: 1; font-size: .95rem; }
+  .btn { display: inline-block; margin-top: .4rem; }
+  .empty { grid-column: 1 / -1; text-align: center; opacity: .8; }
+
+  footer { text-align: center; padding: 2rem 1rem; font-size: .95rem; opacity: .9; }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<script>
+  function toggleTheme() {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  }
+  function toggleMenu() {
+    const list = document.querySelector('.nav-links');
+    list.classList.toggle('open');
+    const expanded = list.classList.contains('open');
+    document.querySelector('.menu-toggle').setAttribute('aria-expanded', expanded);
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') document.body.classList.add('dark');
+  });
+</script>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container nav-inner">
+     <div class="logo">
+  <img src="IMG_0547.JPG" alt="Profile picture of Neeraj Nandan Akella" class="profile-pic">
+  Neeraj Nandan Akella
+</div>
+
+      <!-- Links and actions are siblings (matches projects.html) -->
+      <ul class="nav-links" id="primary-nav" aria-label="Primary Navigation">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="reports.html">Reports</a></li>
+        <li><a href="essays.html">Scientific Essays</a></li>
+        <li><a href="pastprojects.html">Projects</a></li>
+        <li><a href="cv.html">CV</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="toggle-theme" onclick="toggleTheme()" aria-label="Toggle theme">Theme</button>
+        <button class="menu-toggle" onclick="toggleMenu()" aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle menu">Menu</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <h1>Scientific Essays</h1>
+      <p>Formal labratory write-ups as part of my course at KCL.</p>
+    </div>
+  </header>
+
+  <div class="container">
+  <div class="controls">
+    <label class="sr-only" for="search">Search</label>
+    <input id="search" type="search" placeholder="Search title or summary…" />
+    <label class="sr-only" for="sort">Sort</label>
+    <select id="sort">
+      <option value="newest">Newest first</option>
+      <option value="oldest">Oldest first</option>
+    </select>
+  </div>
+</div>
+
+<!-- Grid -->
+<main class="container">
+  <section class="sections" id="essays-grid">
+    <div class="empty">Loading essays…</div>
+  </section>
+</main>
+
+<script>
+(async function(){
+  const GRID  = document.getElementById('essays-grid');
+  const SRC   = 'essays/essays.json';
+  let entries = [];
+
+  async function fetchEntries(){
+    const res = await fetch(SRC, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to fetch essays.json');
+    return res.json();
+  }
+
+  function render(list){
+    GRID.innerHTML = '';
+    if (!list.length){
+      GRID.innerHTML = '<div class="empty">No essays yet. Add PDFs in <code>/essays/</code> and an item in <code>essays/essays.json</code>.</div>';
+      return;
+    }
+    for (const it of list){
+      const card = document.createElement('article');
+      card.className = 'card';
+      const dateStr = it.date ? new Date(it.date).toLocaleDateString() : '';
+      card.innerHTML = `
+        <h3>${it.title || 'Untitled'}</h3>
+        ${dateStr ? `<p class="muted">${dateStr}</p>` : ''}
+        ${it.summary ? `<p>${it.summary}</p>` : ''}
+        ${it.pdf ? `<a class="btn" href="essays/viewer.html?pdf=${encodeURIComponent(it.pdf)}&title=${encodeURIComponent(it.title || 'Untitled')}">Read Report →</a>` : ''}
+      `;
+      GRID.appendChild(card);
+    }
+  }
+
+  function applyFilters(){
+    const q = document.getElementById('search').value.toLowerCase().trim();
+    const mode = document.getElementById('sort').value;
+    let list = [...entries];
+
+    list.sort((a,b) => new Date(a.date) - new Date(b.date));
+    if (mode === 'newest') list.reverse();
+
+    if (q){
+      list = list.filter(it =>
+        (it.title || '').toLowerCase().includes(q) ||
+        (it.summary || '').toLowerCase().includes(q)
+      );
+    }
+    render(list);
+  }
+
+  try {
+    entries = await fetchEntries();
+    entries = entries.map(e => ({
+      title: e.title || 'Untitled',
+      date:  e.date  || '1970-01-01',
+      summary: e.summary || '',
+      pdf:   e.pdf   || ''
+    }));
+    entries.sort((a,b) => new Date(b.date) - new Date(a.date));
+    render(entries);
+  } catch (err){
+    console.error(err);
+    GRID.innerHTML = '<div class="empty">Could not load <code>essays/essays.json</code>. Check the path and JSON syntax.</div>';
+  }
+
+  document.getElementById('search').addEventListener('input', applyFilters);
+  document.getElementById('sort').addEventListener('change', applyFilters);
+})();
+</script>
+
+  <footer>
+    © 2025 Neeraj Nandan Akella. All rights reserved.
+  </footer>
+</body>
+</html>
