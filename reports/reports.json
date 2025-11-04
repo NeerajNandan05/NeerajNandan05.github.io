@@ -4,5 +4,17 @@
     "date": "2024-12-03",
     "summary": "Reproducing the Zeeman splittings with a Cadmium lamp in presence of a magnetic field, and finding the ratio of elementary charge and mass of an electron using the splitting distance.",
     "pdf": "Zeeman Effect - K23102046.pdf"
+  },
+  {
+    "title": "Investigating AC driven RC/RL circuits",
+    "date": "2024-01-30",
+    "summary": "Finding the Voltage across and Reactance of Capacitors and Inductors driven by an AC current in a four part experiment.",
+    "pdf": "AC Circuits - K23102046.pdf"
+  },
+  {
+    "title": "Experimentally Obtaining the Speed of Light",
+    "date": "2024-02-25",
+    "summary": "Measuring the speed of light using a light transmitter, reciever and an oscilloscope and evaluating the sources of error.",
+    "pdf": "Speed of Light - K23102046.pdf"
   }
 ]
