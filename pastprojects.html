@@ -254,7 +254,7 @@
     entries = await fetchEntries();
     entries = entries.map(e => ({
       title: e.title || 'Untitled',
-      date:  e.date  || '1970-01',
+      date:  e.date  || '1970-01-01',
       summary: e.summary || '',
       pdf:   e.pdf   || ''
     }));
